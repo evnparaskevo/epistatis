@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Επιστάτης | AI Agents για Ελληνικές Επιχειρήσεις</title>
+    <meta name="description" content="Αυτοματοποίησε τα τηλεφωνήματα, τα ραντεβού, τα email και το customer support της επιχείρησής σου με custom AI Agents. Αυξήστε τα έσοδα χωρίς επιπλέον προσωπικό.">
+    <meta property="og:title" content="Επιστάτης | AI Agents για Ελληνικές Επιχειρήσεις">
+    <meta property="og:description" content="Ο AI Επιστάτης της Επιχείρησής σου. 24/7 εξυπηρέτηση, αυτόματες κρατήσεις, leads automation.">
+    <meta property="og:type" content="website">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --navy: #0A1628;
+            --navy-light: #112240;
+            --blue: #2563EB;
+            --blue-light: #3B82F6;
+            --gold: #F59E0B;
+            --white: #FFFFFF;
+            --gray: #F8FAFC;
+            --gray-text: #64748B;
+            --border: #E2E8F0;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; color: var(--navy); background: var(--white); }
+
+        /* NAV */
+        nav {
+            position: fixed; top: 0; width: 100%; z-index: 1000;
+            background: rgba(10,22,40,0.97); backdrop-filter: blur(10px);
+            padding: 0 5%; height: 70px; display: flex; align-items: center; justify-content: space-between;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .nav-logo { color: var(--white); font-size: 1.4rem; font-weight: 800; letter-spacing: -0.5px; }
+        .nav-logo span { color: var(--blue-light); }
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+        .nav-links a:hover { color: var(--white); }
+        .nav-cta { background: var(--blue); color: var(--white); padding: 0.6rem 1.4rem; border-radius: 8px; font-weight: 600; font-size: 0.9rem; text-decoration: none; transition: background 0.2s; }
+        .nav-cta:hover { background: var(--blue-light); }
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+        .hamburger span { width: 25px; height: 2px; background: white; border-radius: 2px; transition: 0.3s; }
+        .mobile-menu { display: none; position: fixed; top: 70px; left: 0; width: 100%; background: var(--navy); padding: 1.5rem 5%; flex-direction: column; gap: 1.2rem; z-index: 999; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .mobile-menu.open { display: flex; }
+        .mobile-menu a { color: rgba(255,255,255,0.85); text-decoration: none; font-size: 1rem; font-weight: 500; }
+
+        /* HERO */
+        .hero {
+            background: linear-gradient(135deg, var(--navy) 0%, #0D1F3C 50%, #0A1628 100%);
+            min-height: 100vh; display: flex; align-items: center; padding: 100px 5% 60px;
+            position: relative; overflow: hidden;
+        }
+        .hero::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(ellipse at 70% 50%, rgba(37,99,235,0.12) 0%, transparent 60%);
+        }
+        .hero-content { max-width: 700px; position: relative; z-index: 1; }
+        .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(37,99,235,0.15); border: 1px solid rgba(37,99,235,0.3); color: var(--blue-light); padding: 0.4rem 1rem; border-radius: 50px; font-size: 0.82rem; font-weight: 600; margin-bottom: 1.5rem; letter-spacing: 0.5px; }
+        .hero h1 { font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 900; color: var(--white); line-height: 1.1; margin-bottom: 1.2rem; letter-spacing: -1px; }
+        .hero h1 span { color: var(--blue-light); }
+        .hero p { font-size: 1.15rem; color: rgba(255,255,255,0.72); line-height: 1.7; margin-bottom: 2rem; max-width: 560px; }
+        .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+        .btn-primary { background: var(--blue); color: white; padding: 0.9rem 2rem; border-radius: 10px; font-weight: 700; font-size: 1rem; text-decoration: none; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.5rem; }
+        .btn-primary:hover { background: var(--blue-light); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(37,99,235,0.35); }
+        .btn-secondary { background: transparent; color: white; padding: 0.9rem 2rem; border-radius: 10px; font-weight: 600; font-size: 1rem; text-decoration: none; border: 1px solid rgba(255,255,255,0.25); transition: all 0.2s; }
+        .btn-secondary:hover { border-color: rgba(255,255,255,0.6); background: rgba(255,255,255,0.05); }
+        .hero-stats { display: flex; gap: 2.5rem; margin-top: 3rem; flex-wrap: wrap; }
+        .hero-stat { text-align: left; }
+        .hero-stat .num { font-size: 2rem; font-weight: 900; color: var(--white); }
+        .hero-stat .num span { color: var(--blue-light); }
+        .hero-stat .label { font-size: 0.8rem; color: rgba(255,255,255,0.5); margin-top: 0.2rem; }
+
+        /* TRUST BAR */
+        .trust-bar { background: var(--navy-light); padding: 1.5rem 5%; border-bottom: 1px solid rgba(255,255,255,0.06); }
+        .trust-items { display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; }
+        .trust-item { display: flex; align-items: center; gap: 0.6rem; color: rgba(255,255,255,0.6); font-size: 0.85rem; font-weight: 500; }
+        .trust-item i { color: var(--blue-light); font-size: 1rem; }
+
+        /* SECTIONS */
+        section { padding: 80px 5%; }
+        .section-label { font-size: 0.8rem; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.8rem; }
+        .section-title { font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 800; color: var(--navy); line-height: 1.2; letter-spacing: -0.5px; }
+        .section-title span { color: var(--blue); }
+        .section-sub { font-size: 1.05rem; color: var(--gray-text); line-height: 1.7; margin-top: 0.8rem; max-width: 580px; }
+        .text-center { text-align: center; }
+        .text-center .section-sub { margin: 0.8rem auto 0; }
+
+        /* SERVICES */
+        .services { background: var(--gray); }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+        .service-card { background: var(--white); border-radius: 16px; padding: 2rem; border: 1px solid var(--border); transition: all 0.3s; position: relative; overflow: hidden; }
+        .service-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--blue); transform: scaleX(0); transition: transform 0.3s; }
+        .service-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(10,22,40,0.1); border-color: var(--blue-light); }
+        .service-card:hover::before { transform: scaleX(1); }
+        .service-icon { width: 52px; height: 52px; background: rgba(37,99,235,0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.2rem; }
+        .service-icon i { color: var(--blue); font-size: 1.3rem; }
+        .service-card h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 0.6rem; }
+        .service-card p { font-size: 0.9rem; color: var(--gray-text); line-height: 1.6; margin-bottom: 1.2rem; }
+        .service-price { display: flex; align-items: baseline; gap: 0.3rem; }
+        .service-price .amount { font-size: 1.6rem; font-weight: 900; color: var(--navy); }
+        .service-price .period { font-size: 0.85rem; color: var(--gray-text); }
+        .service-badge { display: inline-block; background: rgba(245,158,11,0.12); color: var(--gold); font-size: 0.75rem; font-weight: 700; padding: 0.25rem 0.7rem; border-radius: 50px; margin-bottom: 0.8rem; border: 1px solid rgba(245,158,11,0.2); }
+
+        /* HOW IT WORKS */
+        .how-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem; margin-top: 3rem; }
+        .how-step { text-align: center; padding: 1.5rem; }
+        .step-num { width: 56px; height: 56px; background: var(--blue); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; font-weight: 900; margin: 0 auto 1rem; }
+        .how-step h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .how-step p { font-size: 0.9rem; color: var(--gray-text); line-height: 1.6; }
+        .how-connector { display: none; }
+
+        /* WHY */
+        .why { background: var(--navy); }
+        .why .section-title { color: var(--white); }
+        .why .section-sub { color: rgba(255,255,255,0.6); }
+        .why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+        .why-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 1.6rem; transition: all 0.3s; }
+        .why-card:hover { background: rgba(37,99,235,0.1); border-color: rgba(37,99,235,0.3); transform: translateY(-3px); }
+        .why-card i { font-size: 1.5rem; color: var(--blue-light); margin-bottom: 1rem; display: block; }
+        .why-card h3 { font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: 0.5rem; }
+        .why-card p { font-size: 0.88rem; color: rgba(255,255,255,0.55); line-height: 1.6; }
+
+        /* FOR WHO */
+        .forwhom { background: var(--gray); }
+        .industry-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1.2rem; margin-top: 3rem; }
+        .industry-card { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 1.5rem 1rem; text-align: center; transition: all 0.3s; cursor: default; }
+        .industry-card:hover { border-color: var(--blue); box-shadow: 0 8px 20px rgba(37,99,235,0.1); transform: translateY(-3px); }
+        .industry-card i { font-size: 2rem; color: var(--blue); margin-bottom: 0.8rem; display: block; }
+        .industry-card p { font-size: 0.88rem; font-weight: 600; color: var(--navy); }
+
+        /* PRICING */
+        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-top: 3rem; max-width: 1100px; margin-left: auto; margin-right: auto; }
+        .pricing-card { background: var(--white); border: 1px solid var(--border); border-radius: 20px; padding: 2rem; transition: all 0.3s; }
+        .pricing-card.featured { background: var(--navy); border-color: var(--blue); position: relative; }
+        .pricing-card.featured::before { content: 'ΔΗΜΟΦΙΛΕΣ'; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--gold); color: var(--navy); font-size: 0.72rem; font-weight: 800; padding: 0.3rem 1rem; border-radius: 50px; letter-spacing: 1px; }
+        .pricing-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(10,22,40,0.12); }
+        .pricing-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.3rem; }
+        .pricing-card.featured h3 { color: var(--white); }
+        .pricing-card .price { font-size: 2.2rem; font-weight: 900; color: var(--navy); margin: 0.8rem 0 0.3rem; }
+        .pricing-card.featured .price { color: var(--white); }
+        .pricing-card .price-desc { font-size: 0.82rem; color: var(--gray-text); margin-bottom: 1.5rem; }
+        .pricing-card.featured .price-desc { color: rgba(255,255,255,0.5); }
+        .pricing-features { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; margin-bottom: 1.8rem; }
+        .pricing-features li { display: flex; align-items: center; gap: 0.6rem; font-size: 0.88rem; color: var(--navy); }
+        .pricing-card.featured .pricing-features li { color: rgba(255,255,255,0.8); }
+        .pricing-features li i { color: #10B981; font-size: 0.85rem; flex-shrink: 0; }
+        .pricing-cta { display: block; text-align: center; padding: 0.85rem; border-radius: 10px; font-weight: 700; font-size: 0.95rem; text-decoration: none; transition: all 0.2s; }
+        .pricing-cta.outline { border: 2px solid var(--blue); color: var(--blue); }
+        .pricing-cta.outline:hover { background: var(--blue); color: white; }
+        .pricing-cta.solid { background: var(--blue); color: white; }
+        .pricing-cta.solid:hover { background: var(--blue-light); }
+
+        /* FAQ */
+        .faq { background: var(--gray); }
+        .faq-list { max-width: 760px; margin: 3rem auto 0; display: flex; flex-direction: column; gap: 1rem; }
+        .faq-item { background: var(--white); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+        .faq-question { padding: 1.3rem 1.5rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-weight: 600; font-size: 0.97rem; gap: 1rem; }
+        .faq-question i { color: var(--blue); transition: transform 0.3s; flex-shrink: 0; }
+        .faq-answer { padding: 0 1.5rem 1.3rem; font-size: 0.92rem; color: var(--gray-text); line-height: 1.7; display: none; }
+        .faq-item.open .faq-answer { display: block; }
+        .faq-item.open .faq-question i { transform: rotate(180deg); }
+
+        /* CONTACT */
+        .contact { background: var(--navy); }
+        .contact .section-title { color: var(--white); }
+        .contact .section-sub { color: rgba(255,255,255,0.6); }
+        .contact-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-top: 3rem; align-items: start; }
+        .contact-info { display: flex; flex-direction: column; gap: 1.5rem; }
+        .contact-point { display: flex; align-items: flex-start; gap: 1rem; }
+        .contact-point i { width: 44px; height: 44px; background: rgba(37,99,235,0.15); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--blue-light); font-size: 1rem; flex-shrink: 0; }
+        .contact-point h4 { font-size: 0.85rem; color: rgba(255,255,255,0.5); margin-bottom: 0.2rem; }
+        .contact-point p { color: var(--white); font-weight: 600; font-size: 0.95rem; }
+        .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+        .form-group label { font-size: 0.82rem; font-weight: 600; color: rgba(255,255,255,0.7); }
+        .form-group input, .form-group select, .form-group textarea {
+            background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+            color: white; padding: 0.8rem 1rem; border-radius: 8px; font-size: 0.9rem;
+            font-family: inherit; transition: border-color 0.2s; outline: none;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--blue-light); }
+        .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(255,255,255,0.3); }
+        .form-group select option { background: var(--navy); }
+        .form-group textarea { resize: vertical; min-height: 110px; }
+        .form-submit { background: var(--blue); color: white; padding: 1rem; border-radius: 10px; font-weight: 700; font-size: 1rem; border: none; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+        .form-submit:hover { background: var(--blue-light); transform: translateY(-2px); }
+        .form-note { font-size: 0.8rem; color: rgba(255,255,255,0.4); text-align: center; margin-top: 0.3rem; }
+        .success-msg { display: none; background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.3); color: #10B981; padding: 1rem; border-radius: 10px; text-align: center; font-weight: 600; }
+
+        /* FOOTER */
+        footer { background: #060E1A; padding: 3rem 5% 2rem; border-top: 1px solid rgba(255,255,255,0.06); }
+        .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; margin-bottom: 2rem; }
+        .footer-brand .logo { font-size: 1.4rem; font-weight: 800; color: var(--white); margin-bottom: 0.8rem; }
+        .footer-brand .logo span { color: var(--blue-light); }
+        .footer-brand p { font-size: 0.88rem; color: rgba(255,255,255,0.45); line-height: 1.7; max-width: 300px; }
+        .footer-col h4 { color: var(--white); font-size: 0.9rem; font-weight: 700; margin-bottom: 1rem; }
+        .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+        .footer-col ul a { color: rgba(255,255,255,0.45); text-decoration: none; font-size: 0.87rem; transition: color 0.2s; }
+        .footer-col ul a:hover { color: var(--white); }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.06); padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: gap; gap: 1rem; }
+        .footer-bottom p { font-size: 0.82rem; color: rgba(255,255,255,0.3); }
+
+        /* COOKIE BANNER */
+        .cookie-banner { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%); width: calc(100% - 3rem); max-width: 700px; background: var(--navy-light); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; padding: 1.2rem 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; z-index: 2000; box-shadow: 0 20px 40px rgba(0,0,0,0.4); flex-wrap: wrap; }
+        .cookie-banner p { color: rgba(255,255,255,0.75); font-size: 0.85rem; line-height: 1.5; flex: 1; min-width: 200px; }
+        .cookie-banner a { color: var(--blue-light); }
+        .cookie-btns { display: flex; gap: 0.8rem; }
+        .cookie-accept { background: var(--blue); color: white; padding: 0.55rem 1.2rem; border-radius: 8px; border: none; font-weight: 700; font-size: 0.85rem; cursor: pointer; }
+        .cookie-decline { background: transparent; color: rgba(255,255,255,0.5); padding: 0.55rem 1.2rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.15); font-weight: 600; font-size: 0.85rem; cursor: pointer; }
+
+        /* MODAL PAGES */
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 3000; overflow-y: auto; padding: 2rem 1rem; }
+        .modal.open { display: flex; align-items: flex-start; justify-content: center; }
+        .modal-content { background: var(--white); border-radius: 16px; max-width: 760px; width: 100%; padding: 2.5rem; position: relative; margin: auto; }
+        .modal-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--gray-text); }
+        .modal-content h2 { font-size: 1.6rem; font-weight: 800; margin-bottom: 1.5rem; color: var(--navy); }
+        .modal-content h3 { font-size: 1.05rem; font-weight: 700; margin: 1.5rem 0 0.5rem; color: var(--navy); }
+        .modal-content p, .modal-content li { font-size: 0.92rem; color: var(--gray-text); line-height: 1.75; }
+        .modal-content ul { padding-left: 1.2rem; margin-top: 0.5rem; display: flex; flex-direction: column; gap: 0.4rem; }
+
+        /* SCROLL ANIMATIONS */
+        .fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            .contact-wrapper { grid-template-columns: 1fr; gap: 2.5rem; }
+            .footer-top { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 680px) {
+            .nav-links, .nav-cta { display: none; }
+            .hamburger { display: flex; }
+            .hero { padding: 90px 5% 50px; }
+            .hero-stats { gap: 1.5rem; }
+            .form-row { grid-template-columns: 1fr; }
+            .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+            .footer-bottom { flex-direction: column; text-align: center; }
+            .trust-items { gap: 1.5rem; justify-content: flex-start; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+    <div class="nav-logo">Επι<span>στάτης</span></div>
+    <ul class="nav-links">
+        <li><a href="#services">Υπηρεσίες</a></li>
+        <li><a href="#how">Πώς Λειτουργεί</a></li>
+        <li><a href="#pricing">Τιμές</a></li>
+        <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta">Ζήτα Demo</a>
+    <div class="hamburger" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+    </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+    <a href="#services" onclick="toggleMenu()">Υπηρεσίες</a>
+    <a href="#how" onclick="toggleMenu()">Πώς Λειτουργεί</a>
+    <a href="#pricing" onclick="toggleMenu()">Τιμές</a>
+    <a href="#faq" onclick="toggleMenu()">FAQ</a>
+    <a href="#contact" onclick="toggleMenu()">Ζήτα Demo</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-content">
+        <div class="hero-badge"><i class="fas fa-bolt"></i> AI-Powered · Ελληνικά · B2B</div>
+        <h1>Χάνεις Πελάτες<br>Γιατί Δεν <span>Απαντάς</span><br>Αμέσως;</h1>
+        <p>Ο Επιστάτης απαντάει για εσένα — 24 ώρες, 7 μέρες την εβδομάδα. Κλείνει ραντεβού, πιάνει leads και εξυπηρετεί πελάτες, ενώ εσύ κάνεις αυτό που ξέρεις καλύτερα.</p>
+        <div class="hero-btns">
+            <a href="#contact" class="btn-primary"><i class="fas fa-calendar-check"></i> Ζήτα Δωρεάν Demo</a>
+            <a href="#services" class="btn-secondary">Δες τις Υπηρεσίες</a>
+        </div>
+        <div class="hero-stats">
+            <div class="hero-stat">
+                <div class="num"><span>&lt;</span>1s</div>
+                <div class="label">Χρόνος απόκρισης</div>
+            </div>
+            <div class="hero-stat">
+                <div class="num">24<span>/7</span></div>
+                <div class="label">Διαθεσιμότητα</div>
+            </div>
+            <div class="hero-stat">
+                <div class="num">80<span>%</span></div>
+                <div class="label">Μείωση χαμένων κλήσεων</div>
+            </div>
+            <div class="hero-stat">
+                <div class="num">3<span>-5</span></div>
+                <div class="label">Μέρες setup</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+    <div class="trust-items">
+        <div class="trust-item"><i class="fas fa-shield-alt"></i> GDPR Compliant</div>
+        <div class="trust-item"><i class="fas fa-language"></i> Πλήρης Ελληνική Υποστήριξη</div>
+        <div class="trust-item"><i class="fas fa-plug"></i> Εύκολη Ενσωμάτωση</div>
+        <div class="trust-item"><i class="fas fa-ban"></i> Χωρίς Μακροχρόνια Δέσμευση</div>
+        <div class="trust-item"><i class="fas fa-headset"></i> Προσωπική Υποστήριξη</div>
+    </div>
+</div>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+    <div class="text-center fade-in">
+        <div class="section-label">Υπηρεσίες</div>
+        <h2 class="section-title">Τέσσερις Λύσεις,<br><span>Ένα Αποτέλεσμα</span></h2>
+        <p class="section-sub">Επιλέξτε ακριβώς αυτό που χρειάζεται η επιχείρησή σας. Όλες οι υπηρεσίες περιλαμβάνουν πλήρη τεχνική υποστήριξη.</p>
+    </div>
+    <div class="services-grid">
+        <div class="service-card fade-in">
+            <div class="service-icon"><i class="fas fa-phone-volume"></i></div>
+            <h3>AI Receptionist 24/7</h3>
+            <p>Απαντάει αυτόματα σε κλήσεις και chat μηνύματα, λύνει απορίες και κρατάει στοιχεία — σαν επαγγελματίας γραμματέας που δεν αρρωσταίνει ποτέ.</p>
+            <div class="service-price">
+                <span class="amount">250€</span>
+                <span class="period">/μήνα</span>
+            </div>
+        </div>
+        <div class="service-card fade-in">
+            <div class="service-icon"><i class="fas fa-funnel-dollar"></i></div>
+            <div class="service-badge">Υψηλότερο ROI</div>
+            <h3>AI Leads & Email Automation</h3>
+            <p>Εντοπίζει, κατηγοριοποιεί και απαντάει σε υποψήφιους πελάτες μέσω email με στόχο την πώληση, ενώ εσύ κοιμάσαι.</p>
+            <div class="service-price">
+                <span class="amount">350€</span>
+                <span class="period">/μήνα</span>
+            </div>
+        </div>
+        <div class="service-card fade-in">
+            <div class="service-icon"><i class="fas fa-calendar-alt"></i></div>
+            <h3>AI Κρατήσεις</h3>
+            <p>Ολοκληρωμένο online booking με αυτόματες υπενθυμίσεις. Μηδέν no-shows, μηδέν χαμένα ραντεβού από κλήσεις εκτός ωραρίου.</p>
+            <div class="service-price">
+                <span class="amount">200€</span>
+                <span class="period">/μήνα</span>
+            </div>
+        </div>
+        <div class="service-card fade-in">
+            <div class="service-icon"><i class="fas fa-rocket"></i></div>
+            <div class="service-badge">High Demand</div>
+            <h3>Κατασκευή Site σε 3 Μέρες</h3>
+            <p>Premium, αστραπιαία ιστοσελίδα πλήρως βελτιστοποιημένη για Google SEO, έτοιμη να φιλοξενήσει τους AI Agents σου.</p>
+            <div class="service-price">
+                <span class="amount">490€</span>
+                <span class="period">εφάπαξ</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+    <div class="text-center fade-in">
+        <div class="section-label">Διαδικασία</div>
+        <h2 class="section-title">Τρία Βήματα για να<br><span>Αλλάξει η Επιχείρησή σου</span></h2>
+    </div>
+    <div class="how-grid">
+        <div class="how-step fade-in">
+            <div class="step-num">1</div>
+            <h3>Δωρεάν Demo</h3>
+            <p>Κλείνουμε ένα 30λεπτο call για να καταγράψουμε τις ανάγκες, τις ώρες αιχμής και τα pain points της επιχείρησής σας.</p>
+        </div>
+        <div class="how-step fade-in">
+            <div class="step-num">2</div>
+            <h3>Custom Setup</h3>
+            <p>Δημιουργούμε τον δικό σας AI Agent, τον τροφοδοτούμε με τις πληροφορίες σας και κάνουμε αυστηρά tests πριν go-live.</p>
+        </div>
+        <div class="how-step fade-in">
+            <div class="step-num">3</div>
+            <h3>Go Live & Αποτελέσματα</h3>
+            <p>Από την 1η μέρα ο Agent απαντάει σε πελάτες και φέρνει αποτελέσματα. Εμείς παρακολουθούμε και βελτιώνουμε συνεχώς.</p>
+        </div>
+    </div>
+</section>
+
+<!-- WHY EPISTATIS -->
+<section class="why">
+    <div class="text-center fade-in">
+        <div class="section-label" style="color: var(--blue-light);">Γιατί Επιστάτης</div>
+        <h2 class="section-title">Τι μας Κάνει <span style="color:var(--blue-light)">Διαφορετικούς</span></h2>
+        <p class="section-sub">Συνδυάζουμε κορυφαία τεχνολογία AI με την προσωπική υποστήριξη που χρειάζεται μια ελληνική επιχείρηση.</p>
+    </div>
+    <div class="why-grid" style="margin-top:3rem">
+        <div class="why-card fade-in"><i class="fas fa-language"></i><h3>Άψογα Ελληνικά</h3><p>Οι Agents μας κατανοούν την ελληνική αργκό, τις τοπικές ιδιαιτερότητες και απαντούν με φυσικότητα και ευγένεια.</p></div>
+        <div class="why-card fade-in"><i class="fas fa-coins"></i><h3>Μετράει από τη 1η Μέρα</h3><p>Κερδίζεις τις χαμένες κλήσεις εκτός ωραρίου. Η υπηρεσία καλύπτει το κόστος της από τις πρώτες νέες κρατήσεις.</p></div>
+        <div class="why-card fade-in"><i class="fas fa-lock"></i><h3>Ασφάλεια & GDPR</h3><p>Τα δεδομένα των πελατών σας αποθηκεύονται με κρυπτογράφηση, πλήρως εναρμονισμένα με την ευρωπαϊκή νομοθεσία.</p></div>
+        <div class="why-card fade-in"><i class="fas fa-chart-line"></i><h3>Live Dashboard</h3><p>Πρόσβαση σε real-time dashboard για κάθε συνομιλία, κάθε ραντεβού και στατιστικά ικανοποίησης πελατών.</p></div>
+        <div class="why-card fade-in"><i class="fas fa-plug"></i><h3>Zero Disruption</h3><p>Δεν χρειάζεται να αλλάξετε τηλεφωνικό κέντρο ή λογισμικό. Κουμπώνουμε απευθείας στα υπάρχοντα συστήματά σας.</p></div>
+        <div class="why-card fade-in"><i class="fas fa-bolt"></i><h3>Ακαριαία Εξυπηρέτηση</h3><p>Οι πελάτες σας δεν θα ξανακούσουν ποτέ "παρακαλώ περιμένετε". Η απόκριση είναι &lt;1 δευτερόλεπτο.</p></div>
+    </div>
+</section>
+
+<!-- FOR WHO -->
+<section class="forwhom">
+    <div class="text-center fade-in">
+        <div class="section-label">Για Ποιους</div>
+        <h2 class="section-title">Λύσεις για <span>Κάθε Κλάδο</span></h2>
+        <p class="section-sub">Προσαρμόζουμε τη συμπεριφορά του AI Agent ανάλογα με τον κλάδο και τις ανάγκες σας.</p>
+    </div>
+    <div class="industry-grid" style="margin-top:3rem">
+        <div class="industry-card fade-in"><i class="fas fa-stethoscope"></i><p>Ιατρεία & Κλινικές</p></div>
+        <div class="industry-card fade-in"><i class="fas fa-hotel"></i><p>Ξενοδοχεία</p></div>
+        <div class="industry-card fade-in"><i class="fas fa-utensils"></i><p>Εστιατόρια</p></div>
+        <div class="industry-card fade-in"><i class="fas fa-cut"></i><p>Κομμωτήρια & Barbershop</p></div>
+        <div class="industry-card fade-in"><i class="fas fa-dumbbell"></i><p>Γυμναστήρια & Wellness</p></div>
+        <div class="industry-card fade-in"><i class="fas fa-tooth"></i><p>Οδοντιατρεία</p></div>
+        <div class="industry-card fade-in"><i class="fas fa-car"></i><p>Συνεργεία Αυτοκινήτων</p></div>
+        <div class="industry-card fade-in"><i class="fas fa-building"></i><p>Γραφεία & Επαγγελματίες</p></div>
+    </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+    <div class="text-center fade-in">
+        <div class="section-label">Τιμές</div>
+        <h2 class="section-title">Χωρίς Κρυφές <span>Χρεώσεις</span></h2>
+        <p class="section-sub">Επιλέξτε το πλάνο που ταιριάζει στον όγκο της εργασίας σας. Χωρίς δεσμεύσεις, χωρίς εκπλήξεις.</p>
+    </div>
+    <div class="pricing-grid" style="margin-top:3rem">
+        <div class="pricing-card fade-in">
+            <h3>Starter</h3>
+            <div class="price">200€<span style="font-size:1rem;font-weight:500;color:var(--gray-text)">/μήνα</span></div>
+            <div class="price-desc">Ιδανικό για μικρές επιχειρήσεις</div>
+            <ul class="pricing-features">
+                <li><i class="fas fa-check"></i> AI Κρατήσεις 24/7</li>
+                <li><i class="fas fa-check"></i> Έως 200 αλληλεπιδράσεις/μήνα</li>
+                <li><i class="fas fa-check"></i> Αυτόματες υπενθυμίσεις</li>
+                <li><i class="fas fa-check"></i> Email support</li>
+                <li><i class="fas fa-check"></i> Βασικό dashboard</li>
+            </ul>
+            <a href="#contact" class="pricing-cta outline">Ξεκίνα Τώρα</a>
+        </div>
+        <div class="pricing-card featured fade-in">
+            <h3>Professional</h3>
+            <div class="price">250€<span style="font-size:1rem;font-weight:500;color:rgba(255,255,255,0.5)">/μήνα</span></div>
+            <div class="price-desc">Για επιχειρήσεις που θέλουν να μεγαλώσουν</div>
+            <ul class="pricing-features">
+                <li><i class="fas fa-check"></i> AI Receptionist 24/7</li>
+                <li><i class="fas fa-check"></i> Έως 500 αλληλεπιδράσεις/μήνα</li>
+                <li><i class="fas fa-check"></i> Κλήσεις + Chat + Email</li>
+                <li><i class="fas fa-check"></i> Live dashboard</li>
+                <li><i class="fas fa-check"></i> Priority support</li>
+                <li><i class="fas fa-check"></i> Μηνιαία αναφορά απόδοσης</li>
+            </ul>
+            <a href="#contact" class="pricing-cta solid">Ζήτα Demo</a>
+        </div>
+        <div class="pricing-card fade-in">
+            <h3>Business</h3>
+            <div class="price">350€<span style="font-size:1rem;font-weight:500;color:var(--gray-text)">/μήνα</span></div>
+            <div class="price-desc">Πλήρης αυτοματοποίηση για μεγάλες επιχειρήσεις</div>
+            <ul class="pricing-features">
+                <li><i class="fas fa-check"></i> AI Receptionist + Leads + Κρατήσεις</li>
+                <li><i class="fas fa-check"></i> Απεριόριστες αλληλεπιδράσεις</li>
+                <li><i class="fas fa-check"></i> CRM Integration</li>
+                <li><i class="fas fa-check"></i> Dedicated account manager</li>
+                <li><i class="fas fa-check"></i> Custom AI training</li>
+                <li><i class="fas fa-check"></i> 24/7 τεχνική υποστήριξη</li>
+            </ul>
+            <a href="#contact" class="pricing-cta outline">Επικοινώνησε μαζί μας</a>
+        </div>
+    </div>
+    <p style="text-align:center;margin-top:1.5rem;font-size:0.88rem;color:var(--gray-text)">Κατασκευή Site σε 3 Μέρες: <strong>490€ εφάπαξ</strong> — Διαθέσιμο ως standalone ή σε συνδυασμό με οποιοδήποτε πλάνο.</p>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+    <div class="text-center fade-in">
+        <div class="section-label">FAQ</div>
+        <h2 class="section-title">Συχνές <span>Ερωτήσεις</span></h2>
+    </div>
+    <div class="faq-list">
+        <div class="faq-item fade-in">
+            <div class="faq-question" onclick="toggleFaq(this)">Τι είναι ένας AI Agent; <i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer">Ένας AI Agent είναι ένα εξελιγμένο λογισμικό τεχνητής νοημοσύνης που εκτελεί συγκεκριμένες εργασίες — όπως να απαντά σε τηλέφωνα, να κλείνει ραντεβού ή να στέλνει email — αλληλεπιδρώντας με τους πελάτες σας με απόλυτα φυσικό τρόπο, σαν κανονικός υπάλληλος γραμματείας.</div>
+        </div>
+        <div class="faq-item fade-in">
+            <div class="faq-question" onclick="toggleFaq(this)">Μιλάει σωστά Ελληνικά; <i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer">Ναι, απόλυτα. Οι AI Agents της Epistatis είναι ρυθμισμένοι με τα πιο προηγμένα γλωσσικά μοντέλα για την ελληνική γλώσσα. Κατανοούν τη φυσική ροή του λόγου, τις διορθώσεις της τελευταίας στιγμής και απαντούν με άψογη άρθρωση και σύνταξη.</div>
+        </div>
+        <div class="faq-item fade-in">
+            <div class="faq-question" onclick="toggleFaq(this)">Πόσος χρόνος χρειάζεται για setup; <i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer">Η βασική παραμετροποίηση διαρκεί από 3 έως 5 εργάσιμες ημέρες. Αν επιλέξετε και κατασκευή site, παραδίδεται αυστηρά μέσα σε 3 μέρες.</div>
+        </div>
+        <div class="faq-item fade-in">
+            <div class="faq-question" onclick="toggleFaq(this)">Θα αντικατασταθούν οι υπάλληλοί μου; <i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer">Όχι. Ο στόχος είναι η αποσυμφόρηση, όχι η αντικατάσταση. Ο AI Agent αναλαμβάνει το 80-90% των επαναλαμβανόμενων εργασιών, επιτρέποντας στο προσωπικό σας να επικεντρωθεί σε ουσιαστική εξυπηρέτηση.</div>
+        </div>
+        <div class="faq-item fade-in">
+            <div class="faq-question" onclick="toggleFaq(this)">Υπάρχει μακροχρόνια δέσμευση; <i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer">Όχι. Οι συνδρομητικές υπηρεσίες χρεώνονται μηνιαία και μπορείτε να διακόψετε ή να τροποποιήσετε το πλάνο σας οποιαδήποτε στιγμή χωρίς επιπλέον επιβάρυνση.</div>
+        </div>
+        <div class="faq-item fade-in">
+            <div class="faq-question" onclick="toggleFaq(this)">Είναι ασφαλή τα δεδομένα των πελατών μου; <i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer">Απολύτως. Τηρούμε τα ευρωπαϊκά πρότυπα ασφαλείας και τον κανονισμό GDPR. Τα δεδομένα είναι κρυπτογραφημένα και δεν χρησιμοποιούνται ποτέ για εκπαίδευση τρίτων μοντέλων.</div>
+        </div>
+        <div class="faq-item fade-in">
+            <div class="faq-question" onclick="toggleFaq(this)">Χρειάζεται να αλλάξω το υπάρχον σύστημά μου; <i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer">Όχι. Οι AI λύσεις μας ενσωματώνονται απευθείας στα υπάρχοντα συστήματά σας χωρίς καμία διαταραχή στη λειτουργία σας.</div>
+        </div>
+        <div class="faq-item fade-in">
+            <div class="faq-question" onclick="toggleFaq(this)">Πώς βλέπω τα αποτελέσματα; <i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer">Έχετε πρόσβαση σε live dashboard που δείχνει κάθε συνομιλία, κάθε ραντεβού που κλείστηκε και τα στατιστικά ικανοποίησης σε πραγματικό χρόνο.</div>
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+    <div class="text-center fade-in">
+        <div class="section-label" style="color:var(--blue-light)">Επικοινωνία</div>
+        <h2 class="section-title">Έτοιμος να <span style="color:var(--blue-light)">Ξεκινήσεις;</span></h2>
+        <p class="section-sub">Συμπλήρωσε τη φόρμα και ένας σύμβουλος θα επικοινωνήσει μαζί σου εντός 24 ωρών για δωρεάν demo.</p>
+    </div>
+    <div class="contact-wrapper">
+        <div class="contact-info fade-in">
+            <div class="contact-point">
+                <i class="fas fa-envelope"></i>
+                <div><h4>Email</h4><p>info@epistatis.gr</p></div>
+            </div>
+            <div class="contact-point">
+                <i class="fas fa-map-marker-alt"></i>
+                <div><h4>Τοποθεσία</h4><p>Αθήνα, Ελλάδα</p></div>
+            </div>
+            <div class="contact-point">
+                <i class="fas fa-clock"></i>
+                <div><h4>Απόκριση</h4><p>Εντός 24 ωρών</p></div>
+            </div>
+            <div style="background:rgba(37,99,235,0.1);border:1px solid rgba(37,99,235,0.2);border-radius:12px;padding:1.5rem;margin-top:1rem;">
+                <p style="color:rgba(255,255,255,0.8);font-size:0.9rem;line-height:1.6;"><i class="fas fa-gift" style="color:var(--gold);margin-right:0.5rem"></i><strong style="color:white">Δωρεάν Demo:</strong> 30 λεπτά one-on-one call όπου σου δείχνουμε live πώς ο AI Agent θα λειτουργεί στη δικιά σου επιχείρηση.</p>
+            </div>
+        </div>
+        <div class="contact-form fade-in">
+            <form id="contactForm" onsubmit="submitForm(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Ονοματεπώνυμο *</label>
+                        <input type="text" placeholder="Γιώργης Παπαδόπουλος" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email *</label>
+                        <input type="email" placeholder="email@εταιρεία.gr" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Τηλέφωνο *</label>
+                        <input type="tel" placeholder="+30 69X XXX XXXX" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Κλάδος Επιχείρησης</label>
+                        <select>
+                            <option value="">Επιλέξτε κλάδο</option>
+                            <option>Ιατρείο / Κλινική</option>
+                            <option>Οδοντιατρείο</option>
+                            <option>Ξενοδοχείο</option>
+                            <option>Εστιατόριο / Καφέ</option>
+                            <option>Κομμωτήριο / Barbershop</option>
+                            <option>Γυμναστήριο / Wellness</option>
+                            <option>Συνεργείο Αυτοκινήτων</option>
+                            <option>Άλλο</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Τι σε ενδιαφέρει περισσότερο;</label>
+                    <select>
+                        <option value="">Επιλέξτε υπηρεσία</option>
+                        <option>AI Receptionist 24/7 — 250€/μήνα</option>
+                        <option>AI Leads & Email Automation — 350€/μήνα</option>
+                        <option>AI Κρατήσεις — 200€/μήνα</option>
+                        <option>Κατασκευή Site σε 3 Μέρες — 490€</option>
+                        <option>Συνδυασμός υπηρεσιών</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Μήνυμα</label>
+                    <textarea placeholder="Πες μας λίγα λόγια για την επιχείρησή σου και τι θέλεις να αυτοματοποιήσεις..."></textarea>
+                </div>
+                <button type="submit" class="form-submit"><i class="fas fa-paper-plane"></i> Στείλε το Αίτημά σου</button>
+                <p class="form-note"><i class="fas fa-lock"></i> Τα στοιχεία σου είναι ασφαλή. Δεν στέλνουμε spam.</p>
+            </form>
+            <div class="success-msg" id="successMsg"><i class="fas fa-check-circle"></i> Το μήνυμά σου εστάλη! Θα επικοινωνήσουμε εντός 24 ωρών.</div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-top">
+        <div class="footer-brand">
+            <div class="logo">Επι<span>στάτης</span></div>
+            <p>AI Agents για Ελληνικές Επιχειρήσεις. Αυτοματοποίηση που αποδίδει από την πρώτη μέρα.</p>
+        </div>
+        <div class="footer-col">
+            <h4>Υπηρεσίες</h4>
+            <ul>
+                <li><a href="#services">AI Receptionist</a></li>
+                <li><a href="#services">AI Leads Automation</a></li>
+                <li><a href="#services">AI Κρατήσεις</a></li>
+                <li><a href="#services">Κατασκευή Site</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Εταιρεία</h4>
+            <ul>
+                <li><a href="#faq">FAQ</a></li>
+                <li><a href="#contact">Επικοινωνία</a></li>
+                <li><a href="#" onclick="openModal('termsModal')">Όροι Χρήσης</a></li>
+                <li><a href="#" onclick="openModal('privacyModal')">Πολιτική Απορρήτου</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>© 2026 Epistatis. Όλα τα δικαιώματα διατηρούνται.</p>
+        <p>Με ❤️ για τις Ελληνικές Επιχειρήσεις</p>
+    </div>
+</footer>
+
+<!-- COOKIE BANNER -->
+<div class="cookie-banner" id="cookieBanner">
+    <p>Χρησιμοποιούμε cookies για να βελτιώσουμε την εμπειρία σας. Διαβάστε την <a href="#" onclick="openModal('privacyModal')">Πολιτική Απορρήτου</a> μας.</p>
+    <div class="cookie-btns">
+        <button class="cookie-accept" onclick="acceptCookies()">Αποδοχή</button>
+        <button class="cookie-decline" onclick="declineCookies()">Απόρριψη</button>
+    </div>
+</div>
+
+<!-- TERMS MODAL -->
+<div class="modal" id="termsModal">
+    <div class="modal-content">
+        <button class="modal-close" onclick="closeModal('termsModal')">✕</button>
+        <h2>Όροι & Προϋποθέσεις Χρήσης</h2>
+        <p><strong>Τελευταία ενημέρωση:</strong> Ιούνιος 2026</p>
+        <h3>1. Αποδοχή Όρων</h3>
+        <p>Με την πρόσβαση και χρήση των υπηρεσιών της Epistatis αποδέχεστε πλήρως τους παρόντες όρους χρήσης. Εάν διαφωνείτε με οποιονδήποτε όρο, παρακαλούμε μην χρησιμοποιείτε τις υπηρεσίες μας.</p>
+        <h3>2. Παροχή Υπηρεσιών</h3>
+        <p>Η Epistatis παρέχει λύσεις AI Agents για αυτοματοποίηση επιχειρηματικών διαδικασιών. Οι υπηρεσίες περιλαμβάνουν AI Receptionist, Leads Automation, Σύστημα Κρατήσεων και Κατασκευή Ιστοσελίδων.</p>
+        <h3>3. Πληρωμές & Χρεώσεις</h3>
+        <p>Οι συνδρομητικές υπηρεσίες χρεώνονται μηνιαία. Η υπηρεσία κατασκευής site χρεώνεται εφάπαξ. Δεν υπάρχουν κρυφές χρεώσεις ή ρήτρες ακύρωσης.</p>
+        <h3>4. Ακύρωση Συνδρομής</h3>
+        <p>Μπορείτε να ακυρώσετε οποιαδήποτε συνδρομή οποιαδήποτε στιγμή, με ισχύ από την επόμενη χρεωστική περίοδο. Δεν γίνονται επιστροφές χρημάτων για ήδη χρεωθέντα διαστήματα.</p>
+        <h3>5. Ευθύνη</h3>
+        <p>Η Epistatis δεν ευθύνεται για έμμεσες ζημίες που προκύπτουν από τη χρήση ή αδυναμία χρήσης των υπηρεσιών. Η ευθύνη μας περιορίζεται στο ποσό που έχετε καταβάλει κατά τον τελευταίο μήνα.</p>
+        <h3>6. Αλλαγές Όρων</h3>
+        <p>Διατηρούμε το δικαίωμα να τροποποιούμε τους παρόντες όρους. Οι αλλαγές θα κοινοποιούνται μέσω email τουλάχιστον 30 ημέρες πριν την εφαρμογή τους.</p>
+        <h3>7. Εφαρμοστέο Δίκαιο</h3>
+        <p>Οι παρόντες όροι διέπονται από το Ελληνικό Δίκαιο. Κάθε διαφορά υπάγεται στη δικαιοδοσία των δικαστηρίων Αθηνών.</p>
+    </div>
+</div>
+
+<!-- PRIVACY MODAL -->
+<div class="modal" id="privacyModal">
+    <div class="modal-content">
+        <button class="modal-close" onclick="closeModal('privacyModal')">✕</button>
+        <h2>Πολιτική Απορρήτου & GDPR</h2>
+        <p><strong>Τελευταία ενημέρωση:</strong> Ιούνιος 2026</p>
+        <h3>1. Υπεύθυνος Επεξεργασίας</h3>
+        <p>Υπεύθυνος επεξεργασίας των δεδομένων σας είναι η Epistatis με έδρα την Αθήνα, Ελλάδα. Επικοινωνία: info@epistatis.gr</p>
+        <h3>2. Ποια Δεδομένα Συλλέγουμε</h3>
+        <ul>
+            <li>Στοιχεία επικοινωνίας (όνομα, email, τηλέφωνο)</li>
+            <li>Πληροφορίες επιχείρησης</li>
+            <li>Δεδομένα χρήσης υπηρεσιών (συνομιλίες AI Agent)</li>
+            <li>Τεχνικά δεδομένα (IP, cookies)</li>
+        </ul>
+        <h3>3. Σκοπός Επεξεργασίας</h3>
+        <p>Τα δεδομένα χρησιμοποιούνται αποκλειστικά για την παροχή και βελτίωση των υπηρεσιών μας, την επικοινωνία μαζί σας και τη συμμόρφωση με νομικές υποχρεώσεις.</p>
+        <h3>4. Ασφάλεια Δεδομένων</h3>
+        <p>Χρησιμοποιούμε κρυπτογράφηση AES-256 για αποθήκευση και TLS 1.3 για μεταφορά δεδομένων. Τα δεδομένα αποθηκεύονται σε servers εντός ΕΕ.</p>
+        <h3>5. Δικαιώματά σας (GDPR)</h3>
+        <ul>
+            <li>Δικαίωμα πρόσβασης στα δεδομένα σας</li>
+            <li>Δικαίωμα διόρθωσης ανακριβών δεδομένων</li>
+            <li>Δικαίωμα διαγραφής ("δικαίωμα στη λήθη")</li>
+            <li>Δικαίωμα φορητότητας δεδομένων</li>
+            <li>Δικαίωμα εναντίωσης στην επεξεργασία</li>
+        </ul>
+        <h3>6. Cookies</h3>
+        <p>Χρησιμοποιούμε απαραίτητα cookies για λειτουργία του site και, με τη συγκατάθεσή σας, αναλυτικά cookies για βελτίωση της εμπειρίας.</p>
+        <h3>7. Επικοινωνία</h3>
+        <p>Για άσκηση των δικαιωμάτων σας ή για οποιοδήποτε ερώτημα σχετικά με τα δεδομένα σας: info@epistatis.gr</p>
+    </div>
+</div>
+
+<script>
+    // Mobile Menu
+    function toggleMenu() {
+        document.getElementById('mobileMenu').classList.toggle('open');
+    }
+
+    // FAQ Accordion
+    function toggleFaq(el) {
+        const item = el.parentElement;
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+        if (!isOpen) item.classList.add('open');
+    }
+
+    // Modals
+    function openModal(id) {
+        event.preventDefault();
+        document.getElementById(id).classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeModal(id) {
+        document.getElementById(id).classList.remove('open');
+        document.body.style.overflow = '';
+    }
+    document.querySelectorAll('.modal').forEach(m => {
+        m.addEventListener('click', function(e) {
+            if (e.target === m) closeModal(m.id);
+        });
+    });
+
+    // Cookie Banner
+    if (localStorage.getItem('cookiesAccepted')) {
+        document.getElementById('cookieBanner').style.display = 'none';
+    }
+    function acceptCookies() {
+        localStorage.setItem('cookiesAccepted', 'true');
+        document.getElementById('cookieBanner').style.display = 'none';
+    }
+    function declineCookies() {
+        localStorage.setItem('cookiesAccepted', 'declined');
+        document.getElementById('cookieBanner').style.display = 'none';
+    }
+
+    // Form Submit
+    function submitForm(e) {
+        e.preventDefault();
+        document.getElementById('contactForm').style.display = 'none';
+        document.getElementById('successMsg').style.display = 'block';
+    }
+
+    // Scroll Animations
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Smooth nav scroll offset
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', function(e) {
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                e.preventDefault();
+                window.scrollTo({ top: target.offsetTop - 75, behavior: 'smooth' });
+            }
+        });
+    });
+</script>
+</body>
+</html>
